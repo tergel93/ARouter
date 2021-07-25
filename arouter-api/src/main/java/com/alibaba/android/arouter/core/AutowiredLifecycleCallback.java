@@ -6,6 +6,7 @@ import android.app.Application;
 import android.os.Build;
 import android.os.Bundle;
 
+import com.alibaba.android.arouter.facade.template.IInjectAutomatically;
 import com.alibaba.android.arouter.launcher.ARouter;
 
 /**
@@ -15,12 +16,13 @@ import com.alibaba.android.arouter.launcher.ARouter;
  * @version 1.0
  * @since 2017/2/21 上午11:28
  */
-@Deprecated
 @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 public class AutowiredLifecycleCallback implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        ARouter.getInstance().inject(activity);
+        if (activity instanceof IInjectAutomatically) {
+            ARouter.getInstance().inject(activity);
+        }
     }
 
     @Override
